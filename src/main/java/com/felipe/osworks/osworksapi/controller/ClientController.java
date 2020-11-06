@@ -2,6 +2,7 @@ package com.felipe.osworks.osworksapi.controller;
 
 import com.felipe.osworks.osworksapi.domain.model.Client;
 import com.felipe.osworks.osworksapi.domain.repository.ClientRepository;
+import com.felipe.osworks.osworksapi.domain.service.ClientRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class ClientController {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private ClientRegisterService clientRegister;
 
     @GetMapping
     public List<Client> list(){
@@ -37,7 +41,7 @@ public class ClientController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Client add(@Valid @RequestBody Client client){
-        return clientRepository.save(client);
+        return clientRegister.save(client);
     }
 
     @PutMapping("/{clientId}")
@@ -46,7 +50,7 @@ public class ClientController {
            return ResponseEntity.notFound().build();
         }
         client.setId(clientId);
-        client = clientRepository.save(client);
+        client = clientRegister.save(client);
 
         return ResponseEntity.ok(client);
     }
@@ -56,7 +60,7 @@ public class ClientController {
         if(!clientRepository.existsById(clientId)){
             return ResponseEntity.notFound().build();
         }
-        clientRepository.deleteById(clientId);
+        clientRegister.delete(clientId);
         return ResponseEntity.noContent().build();
     }
 
