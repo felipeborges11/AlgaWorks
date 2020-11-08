@@ -1,6 +1,10 @@
 package com.felipe.osworks.osworksapi.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -12,16 +16,24 @@ public class WorkOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
     private Client client;
 
+    @NotBlank
     private String description;
+
+    @NotNull
     private BigDecimal price;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     private WorkOrderStatus status;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime openDate;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime finalizationDate;
 
 

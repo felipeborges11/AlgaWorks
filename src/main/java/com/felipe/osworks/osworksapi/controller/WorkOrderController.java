@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/work-order")
 public class WorkOrderController {
@@ -15,7 +17,7 @@ public class WorkOrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public WorkOrder create(@RequestBody WorkOrder workOrder) {
+    public WorkOrder create(@Valid @RequestBody WorkOrder workOrder) {
         return workOrderManagerService.create(workOrder);
     }
 }
